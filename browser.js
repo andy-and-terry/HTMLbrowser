@@ -16,8 +16,13 @@
 
 /**
  * CORS proxy used in fallback mode.
- * Replace this with your own proxy URL if desired, e.g.:
- *   'http://localhost:8010/proxy?url='
+ *
+ * ⚠️  SECURITY / PRIVACY WARNING: The default proxy (allorigins.win) is a
+ * public third-party service.  Every URL you load in Fallback Mode is sent
+ * to this proxy, which can log or inspect the requests and responses.
+ * Do NOT use the default proxy to browse authenticated or sensitive pages.
+ * Replace this with a trusted proxy before any production or shared use.
+ * See README.md for instructions on running a local proxy.
  */
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
@@ -218,6 +223,14 @@ function tryIframe(url) {
       }
     };
 
+    // Guard: only allow http / https URLs to be loaded in the iframe.
+    // normalizeUrl() already enforces this, but we re-check here to
+    // prevent javascript: or data: URLs from being set as the src.
+    if (!/^https?:\/\//i.test(url)) {
+      settle(reject, new Error('Only http:// and https:// URLs are supported'));
+      return;
+    }
+
     directFrame.src = url;
   });
 }
@@ -385,14 +398,19 @@ retryBtn.addEventListener('click', () => {
 });
 
 // Handle navigation messages posted by the fallback iframe's hook script.
+// Validate both the message source (must be our fallback iframe) and the
+// URL scheme (must be http or https) before acting on the message.
 window.addEventListener('message', (e) => {
   if (
-    e.data &&
-    e.data.type === 'navigate' &&
-    typeof e.data.url === 'string'
+    e.source !== fallbackFrame.contentWindow ||
+    !e.data ||
+    e.data.type !== 'navigate' ||
+    typeof e.data.url !== 'string' ||
+    !/^https?:\/\//i.test(e.data.url)
   ) {
-    navigate(e.data.url);
+    return;
   }
+  navigate(e.data.url);
 });
 
 // Preset URL buttons on the welcome screen.
