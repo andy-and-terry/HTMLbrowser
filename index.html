@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="browser-chrome">
+    <div id="toolbar">
+      <button id="back-btn" title="Back" disabled>&#8592;</button>
+      <button id="forward-btn" title="Forward" disabled>&#8594;</button>
+      <button id="reload-btn" title="Reload">&#8635;</button>
+      <input
+        type="text"
+        id="address-bar"
+        placeholder="Enter a URL, e.g. https://example.com"
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <button id="go-btn">Go</button>
+    </div>
+    <div id="status-bar">
+      <span id="status-indicator" class="indicator-dot"></span>
+      <span id="status-text">Enter a URL above to start browsing</span>
+    </div>
+  </div>
+
+  <div id="content-area">
+    <!-- Welcome screen shown on startup -->
+    <div id="welcome-screen">
+      <div class="welcome-content">
+        <h1>&#127758; HTML Browser</h1>
+        <p>Enter a URL in the address bar above to start browsing.</p>
+        <div class="try-these">
+          <p><strong>Try these:</strong></p>
+          <button class="preset-url" data-url="https://example.com">example.com</button>
+          <button class="preset-url" data-url="https://en.wikipedia.org/wiki/Web_browser">Wikipedia</button>
+          <button class="preset-url" data-url="https://news.ycombinator.com">Hacker News</button>
+        </div>
+        <div class="mode-info">
+          <div class="mode-badge iframe-badge">
+            <strong>&#128247; Direct Mode</strong>
+            <p>Page loads directly in an embedded iframe — fastest, full fidelity.</p>
+          </div>
+          <div class="mode-badge fetch-badge">
+            <strong>&#9889; Fallback Mode</strong>
+            <p>When direct embedding is blocked, page source is fetched and re-rendered with working links.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error screen -->
+    <div id="error-screen" class="hidden">
+      <div class="error-content">
+        <div class="error-icon">&#9888;&#65039;</div>
+        <h2>Unable to load page</h2>
+        <p id="error-message"></p>
+        <button id="retry-btn">Retry</button>
+      </div>
+    </div>
+
+    <!--
+      Direct iframe: used for Option 1 (direct embedding).
+      No sandbox so the page behaves as expected.
+    -->
+    <iframe
+      id="direct-frame"
+      class="hidden"
+      title="Browser Content — Direct Mode"
+      referrerpolicy="no-referrer"
+    ></iframe>
+
+    <!--
+      Fallback iframe: used for Option 2 (fetched source rendered via srcdoc).
+      Sandboxed WITHOUT allow-same-origin so fetched content cannot access
+      this app's cookies / localStorage / sessionStorage.
+      postMessage still works across the null-origin boundary.
+    -->
+    <iframe
+      id="fallback-frame"
+      class="hidden"
+      title="Browser Content — Fallback Mode"
+      sandbox="allow-scripts allow-forms allow-popups allow-modals"
+    ></iframe>
+  </div>
+
+  <script src="browser.js"></script>
+</body>
+</html>
