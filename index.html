@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="toolbar">
+    <div id="address-bar-container">
+      <span id="lock-icon" class="hidden">🔒</span>
+      <input
+        type="text"
+        id="address-bar"
+        placeholder="Enter a URL, e.g. https://example.com"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Address bar"
+      >
+      <button id="go-btn" aria-label="Go">Go</button>
+    </div>
+    <div id="status-bar" aria-live="polite">
+      <span id="status-text">Enter a URL above and press Go to browse.</span>
+    </div>
+  </div>
+
+  <div id="loading" class="hidden" aria-live="polite" role="status">
+    <div class="spinner" aria-hidden="true"></div>
+    <span>Loading&hellip;</span>
+  </div>
+
+  <div id="error-message" class="hidden" role="alert"></div>
+
+  <div id="browser-container">
+    <iframe
+      id="browser-frame"
+      title="Browser content"
+      aria-label="Browsed page"
+    ></iframe>
+  </div>
+
+  <script src="browser.js"></script>
+</body>
+</html>

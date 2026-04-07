@@ -1,0 +1,170 @@
+/* ── Reset & base ──────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  background: #202124;
+  color: #e8eaed;
+  overflow: hidden;
+}
+
+/* ── Layout ────────────────────────────────────────────────────────────────── */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Toolbar ───────────────────────────────────────────────────────────────── */
+#toolbar {
+  flex-shrink: 0;
+  background: #292b2f;
+  padding: 8px 10px 6px;
+  border-bottom: 1px solid #3c3f43;
+}
+
+#address-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #3c4043;
+  border-radius: 22px;
+  padding: 0 10px 0 12px;
+  transition: background 0.15s;
+}
+
+#address-bar-container:focus-within {
+  background: #fff;
+  outline: 2px solid #8ab4f8;
+}
+
+#lock-icon {
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+#address-bar {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: #e8eaed;
+  font-size: 14px;
+  outline: none;
+  min-width: 0;
+}
+
+#address-bar-container:focus-within #address-bar {
+  color: #202124;
+}
+
+#address-bar::placeholder {
+  color: #9aa0a6;
+}
+
+#address-bar-container:focus-within #address-bar::placeholder {
+  color: #bdc1c6;
+}
+
+#go-btn {
+  flex-shrink: 0;
+  padding: 5px 14px;
+  border: none;
+  border-radius: 18px;
+  background: #8ab4f8;
+  color: #202124;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.08s;
+}
+
+#go-btn:hover {
+  background: #aecbfa;
+}
+
+#go-btn:active {
+  transform: scale(0.96);
+}
+
+/* ── Status bar ────────────────────────────────────────────────────────────── */
+#status-bar {
+  padding: 4px 4px 0;
+  min-height: 20px;
+}
+
+#status-text {
+  font-size: 11px;
+  color: #9aa0a6;
+  transition: color 0.2s;
+}
+
+#status-text.loading { color: #8ab4f8; }
+#status-text.option1 { color: #81c995; }
+#status-text.option2 { color: #fdd663; }
+#status-text.error   { color: #f28b82; }
+
+/* ── Loading spinner ───────────────────────────────────────────────────────── */
+#loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex: 1;
+  color: #9aa0a6;
+  font-size: 15px;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #3c4043;
+  border-top-color: #8ab4f8;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Error message ─────────────────────────────────────────────────────────── */
+#error-message {
+  flex: 1;
+  padding: 24px 28px;
+  background: #2d1f1f;
+  border-left: 4px solid #f28b82;
+  color: #f28b82;
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-y: auto;
+}
+
+/* ── Browser frame ─────────────────────────────────────────────────────────── */
+#browser-container {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background: #fff;
+}
+
+#browser-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+/* ── Utility ───────────────────────────────────────────────────────────────── */
+.hidden {
+  display: none !important;
+}
