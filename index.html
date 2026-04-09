@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -37,6 +37,81 @@
       id="browser-frame"
       title="Browser content"
       aria-label="Browsed page"
+    ></iframe>
+  </div>
+
+  <script src="browser.js"></script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Browser Chrome / Toolbar -->
+  <div id="browser-chrome">
+    <div id="toolbar">
+      <button id="back-btn" title="Back" disabled>&#8592;</button>
+      <button id="forward-btn" title="Forward" disabled>&#8594;</button>
+      <button id="reload-btn" title="Reload">&#8635;</button>
+
+      <!-- Lock icon -->
+      <span id="lock-icon" class="hidden">🔒</span>
+
+      <input
+        type="text"
+        id="address-bar"
+        placeholder="Enter a URL, e.g. https://example.com"
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <button id="go-btn">Go</button>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="status-bar">
+      <span id="status-indicator" class="indicator-dot"></span>
+      <span id="status-text">Enter a URL above to start browsing</span>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div id="loading" class="hidden" aria-live="polite" role="status">
+    <div class="spinner" aria-hidden="true"></div>
+    <span>Loading&hellip;</span>
+  </div>
+
+  <!-- Error Message -->
+  <div id="error-screen" class="hidden">
+    <div class="error-content">
+      <div class="error-icon">&#9888;&#65039;</div>
+      <h2>Unable to load page</h2>
+      <p id="error-message"></p>
+      <button id="retry-btn">Retry</button>
+    </div>
+  </div>
+
+  <!-- Browser Container -->
+  <div id="content-area">
+    <!-- Direct iframe -->
+    <iframe
+      id="direct-frame"
+      class="hidden"
+      title="Browser Content — Direct Mode"
+      referrerpolicy="no-referrer"
+    ></iframe>
+
+    <!-- Fallback iframe -->
+    <iframe
+      id="fallback-frame"
+      class="hidden"
+      title="Browser Content — Fallback Mode"
+      sandbox="allow-scripts allow-forms allow-popups allow-modals"
     ></iframe>
   </div>
 
