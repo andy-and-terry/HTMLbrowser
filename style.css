@@ -168,3 +168,8 @@ body {
 .hidden {
   display: none !important;
 }
+/* ── Addons ───────────────────────────────────────────────────────────────── */
+#lock-icon {
+  font-size: 12px;
+  margin-right: 4px;
+}
